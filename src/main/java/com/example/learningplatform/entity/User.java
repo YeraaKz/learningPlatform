@@ -43,8 +43,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Course> courses;
+    @OneToMany(mappedBy = "user")
+    private List<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "teacher")
     private List<Course> teachingCourses;

@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.util.*;
 
 
@@ -31,18 +30,13 @@ public class Course {
 
     @Column(name = "date_created")
     @Temporal(TemporalType.DATE)
-    private Date date_created;
+    private Date dateCreated;
 
     @Column(name = "level_difficulty")
-    private int level_difficulty;
+    private int levelDifficulty;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_courses",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> users;
+    @OneToMany(mappedBy = "course")
+    private List<Enrollment> enrollments;
 
     @ManyToOne
     private User teacher;
