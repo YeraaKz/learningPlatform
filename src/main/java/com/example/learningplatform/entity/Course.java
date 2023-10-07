@@ -46,5 +46,17 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Discussion> discussions;
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", levelDifficulty=" + levelDifficulty +
+                ", teacher=" + teacher +
+                '}';
+    }
 }
 

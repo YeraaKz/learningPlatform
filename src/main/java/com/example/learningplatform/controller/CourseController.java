@@ -4,8 +4,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.learningplatform.entity.Course;
+import com.example.learningplatform.entity.Lesson;
 import com.example.learningplatform.entity.User;
 import com.example.learningplatform.model.dto.CourseDTO;
+import com.example.learningplatform.model.dto.LessonDTO;
 import com.example.learningplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,9 +34,29 @@ public class CourseController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getById(@PathVariable("id") Long id){
+    @GetMapping("/{course_id}")
+    public ResponseEntity<CourseDTO> getById(@PathVariable("course_id") Long id){
         return ResponseEntity.ok(modelMapper.map(courseService.findById(id), CourseDTO.class));
+    }
+
+    @GetMapping("/{course_id}/lessons")
+    public ResponseEntity<List<LessonDTO>> getCourseLessons(@PathVariable("course_id") Long id){
+        List<Lesson> lessons = courseService.findById(id).getLessons().stream().toList();
+
+        return ResponseEntity.ok(lessons.stream()
+                .map(lesson -> modelMapper.map(lesson, LessonDTO.class))
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{course_id}/lessons/{lesson_id}")
+    public ResponseEntity<LessonDTO> getCourseLessonById(@PathVariable Long course_id,
+                                                      @PathVariable Long lesson_id){
+        return ResponseEntity.ok(
+                modelMapper.map(courseService.findById(course_id).getLessons().stream()
+                        .filter(lesson -> lesson.getId().equals(lesson_id))
+                        .findFirst()
+                        .get(), LessonDTO.class)
+        );
     }
 
     @PostMapping("/{id}/enroll")

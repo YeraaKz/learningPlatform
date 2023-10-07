@@ -1,6 +1,7 @@
 package com.example.learningplatform;
 
 import com.example.learningplatform.entity.Course;
+import com.example.learningplatform.entity.Lesson;
 import com.example.learningplatform.entity.Role;
 import com.example.learningplatform.entity.User;
 import com.example.learningplatform.repository.CourseRepository;
